@@ -1,0 +1,49 @@
+{% extends 'base.html'%}
+
+{% block 'titulo' %} {{contato.nome}} | {%endblock%}
+
+{%block conteudo%}
+{% include 'parciais/_messages.html' %}
+    <h1 class="mt-5">{{ contato.nome }} {{ contato.sobrenome }}</h1>
+
+    {% if contato.foto %}
+        <div style="float: right">
+          <p>
+              <img src="{{ contato.foto.url }}" style="max-width: 250px; height: auto;">
+          </p>
+        </div>
+    {% endif %}
+
+    <dl>
+      <dt>Telefone</dt>
+      <dd>{{ contato.telefone }}</dd>
+
+      <dt>E-mail</dt>
+      <dd>{{ contato.email }}</dd>
+
+      <dt>Categoria</dt>
+      <dd>{{ contato.categoria }}</dd>
+
+      <dt>Descrição</dt>
+      <dd style="text-align:justify; word-wrap: break-word; width:600px;">
+        {{ contato.descricao }}
+      </dd>
+
+      <dt>Data de criação</dt>
+      <dd>
+          {{ contato.data_criacao|date:'d/m/Y' }}
+      </dd>
+
+      <div style="display: inline-block;"><br>
+          <a class="btn btn-dark" href="{% url 'editar_contato' contato.id %}" role="button">Editar</a>
+          <a class="btn btn-dark" href="{% url 'index' %}" role="button">Voltar</a>
+          {% if perms.contatos.delete_contato %}
+              <a style="position: relative; left: 390px;"
+                 class="btn btn-danger"
+                 href="{% url 'deletar_contato' contato.id %}" role="button">Excluir
+              </a>
+          {% endif %}
+      </div>
+    </dl>
+
+{%endblock%}

@@ -24,10 +24,10 @@ def index(request):
 
 
 def ver_contato(request, contato_id):
-
-    contato = get_object_or_404(Contato, id=contato_id)  # Levanta Erro 404 quando contato não for localizado.
-
-    if not contato.mostrar:  # Impede que o contato seja exibido, se não estiver com mostrar ativado.
+    # Levanta Erro 404 se contato não for localizado.
+    contato = get_object_or_404(Contato, id=contato_id)  
+    # Impede que o contato seja exibido, se não estiver com mostrar ativado.
+    if not contato.mostrar:  
         raise Http404()
 
     return render(request, 'contatos/ver_contato.html', {
@@ -36,10 +36,10 @@ def ver_contato(request, contato_id):
 
 
 def busca(request):
-
-    termo = request.GET.get('termo')  # Armazeno o termo buscado na variável.
-
-    if termo is None or not termo: # Indica que se o termo de busca estiver vazio ou None
+    # Armazeno o termo buscado na variável.
+    termo = request.GET.get('termo')  
+    # Indica que se o termo de busca estiver vazio ou None.
+    if termo is None or not termo:
         messages.add_message(
             request,
             messages.ERROR,
